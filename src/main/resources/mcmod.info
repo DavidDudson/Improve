@@ -1,8 +1,8 @@
 [
     {
-      "modid": "${modid}",
-      "name": "${modName}",
-      "description": "Api for all other BDNZ Mods",
+      "modid": "Improve",
+      "name": "Improve",
+      "description": "Mod for passive improvement. Hard work pays off",
       "version": "${version}",
       "mcversion": "${mcversion}",
       "url": "https://github.com/DavidDudson/Improve",
