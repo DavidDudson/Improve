@@ -2,7 +2,14 @@ package nz.daved.event
 
 import net.minecraftforge.fml.common.Mod.EventHandler
 import net.minecraftforge.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent, FMLServerStartedEvent}
-import nz.daved.proxy.{IProxy, LoadingEvents}
+import nz.daved.proxy.IProxy
+
+trait LoadingEvents {
+  def serverStarting() = {}
+  def preInit() = {}
+  def init() = {}
+  def postInit() = {}
+}
 
 trait LoadingEventDelegate extends LoadingEvents {
 
