@@ -1,14 +1,13 @@
 package nz.daved
 
 import net.minecraftforge.fluids.FluidRegistry
-import net.minecraftforge.fml.common.Mod.{EventHandler, Instance}
-import net.minecraftforge.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent, FMLServerStartedEvent}
+import net.minecraftforge.fml.common.Mod.Instance
 import net.minecraftforge.fml.common.{Mod, SidedProxy}
-import nz.daved.event.ServerInitialization
+import nz.daved.event.LoadingEventDelegate
 import nz.daved.proxy.IProxy
 
 @Mod(modid = "Improve", version = "0.1", modLanguage = "scala")
-object Improve extends ServerInitialization {
+object Improve extends LoadingEventDelegate {
 
   FluidRegistry.enableUniversalBucket()
 
