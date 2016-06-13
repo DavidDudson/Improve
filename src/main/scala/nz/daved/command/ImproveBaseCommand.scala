@@ -6,7 +6,7 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.util.math.BlockPos
 
 case class ImproveBaseCommand() extends ICommand {
-  override def getCommandName = "Improve DashBoard"
+  override def getCommandName = "improve"
 
   override def getCommandAliases = List("improve", "imp")
 

@@ -15,6 +15,6 @@ object Improve extends LoadingEventDelegate {
   val instance = this
 
   @SidedProxy(clientSide = "nz.daved.proxy.ClientProxy", serverSide = "nz.daved.proxy.ServerProxy")
-  val proxy: IProxy = _
+  var proxy: IProxy = null
 
 }

@@ -13,7 +13,7 @@ trait LoadingEvents {
 
 trait LoadingEventDelegate extends LoadingEvents {
 
-  val proxy: IProxy
+  var proxy: IProxy
 
   @EventHandler
   def init(evt: FMLInitializationEvent) = proxy.init()
@@ -25,5 +25,5 @@ trait LoadingEventDelegate extends LoadingEvents {
   def postInit(evt: FMLPostInitializationEvent) = proxy.postInit()
 
   @EventHandler
-  def serverStarting(evt: FMLServerStartedEvent) = proxy.serverStarting(evt)
+  override def serverStarting(evt: FMLServerStartingEvent) = proxy.serverStarting(evt)
 }
