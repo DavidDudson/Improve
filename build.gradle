@@ -1,5 +1,9 @@
 apply plugin: 'scala'
 
+dependencies {
+    compile "org.scalaz:scalaz-core:7.2.3"
+}
+
 processResources {
     // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
