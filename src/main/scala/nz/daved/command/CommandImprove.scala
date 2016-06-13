@@ -6,7 +6,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.server.MinecraftServer
 import net.minecraft.util.math.BlockPos
 
-case class ImproveBaseCommand() extends ICommand {
+case class CommandImprove() extends ICommand {
   override def getCommandName = "improve"
 
   override def getCommandAliases = List("improve", "imp")

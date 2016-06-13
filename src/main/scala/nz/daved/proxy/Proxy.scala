@@ -2,7 +2,7 @@ package nz.daved.proxy
 
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent
-import nz.daved.command.ImproveBaseCommand
+import nz.daved.command.CommandImprove
 import nz.daved.event.{EventDelegate, LoadingEvents}
 
 trait IProxy extends LoadingEvents
@@ -15,6 +15,6 @@ case class ServerProxy() extends IProxy {
   }
 
   override def serverStarting(evt: FMLServerStartingEvent) = {
-    evt.registerServerCommand(ImproveBaseCommand())
+    evt.registerServerCommand(CommandImprove())
   }
 }
