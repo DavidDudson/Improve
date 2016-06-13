@@ -1,0 +1,16 @@
+[
+    {
+      "modid": "${modid}",
+      "name": "${modName}",
+      "description": "Api for all other BDNZ Mods",
+      "version": "${version}",
+      "mcversion": "${mcversion}",
+      "url": "https://github.com/DavidDudson/Improve",
+      "updateUrl": "https://github.com/DavidDudson/Improve",
+      "authors": ["David J. Dudson"],
+      "credits": "All of #MinecraftForge and the modding community",
+      "logoFile": "",
+      "screenshots": [],
+      "dependencies": []
+    }
+]
