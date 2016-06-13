@@ -2,6 +2,7 @@ package nz.daved.command
 
 import scala.collection.JavaConversions._
 import net.minecraft.command.{ICommand, ICommandSender}
+import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.server.MinecraftServer
 import net.minecraft.util.math.BlockPos
 
@@ -22,7 +23,7 @@ case class ImproveBaseCommand() extends ICommand {
       args: Array[String],
       pos: BlockPos) = Nil
 
-  override def checkPermission(server: MinecraftServer, sender: ICommandSender) = true
+  override def checkPermission(server: MinecraftServer, sender: ICommandSender) = sender.isInstanceOf[EntityPlayer]
 
   override def compareTo(o: ICommand) = 0
 }
