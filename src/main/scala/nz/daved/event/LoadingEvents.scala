@@ -2,7 +2,7 @@ package nz.daved.event
 
 import net.minecraftforge.fml.common.Mod.EventHandler
 import net.minecraftforge.fml.common.event._
-import nz.daved.command.CommandImprove
+import nz.daved.command.Commands
 import nz.daved.proxy.IProxy
 
 trait LoadingEvents {
@@ -27,7 +27,7 @@ trait LoadingEventDelegate extends LoadingEvents {
 
   @EventHandler
   def serverStarting(evt: FMLServerStartingEvent) = {
-    evt.registerServerCommand(CommandImprove())
     proxy.serverStarting()
+    Commands(evt)
   }
 }
