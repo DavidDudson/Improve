@@ -3,12 +3,12 @@ package nz.daved
 import net.minecraftforge.fluids.FluidRegistry
 import net.minecraftforge.fml.common.Mod.Instance
 import net.minecraftforge.fml.common.{Mod, SidedProxy}
-import nz.daved.event.LoadingEventDelegate
+import nz.daved.event.CommonLoadingEvents
 import nz.daved.proxy.IProxy
 import org.apache.logging.log4j.Logger
 
 @Mod(modid = MOD_ID, version = MOD_VERSION, modLanguage = "scala")
-object Improve extends LoadingEventDelegate {
+object Improve extends CommonLoadingEvents {
   var logger: Logger = null
 
   FluidRegistry.enableUniversalBucket()
