@@ -5,6 +5,7 @@ import net.minecraft.command.{ICommand, ICommandSender}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.server.MinecraftServer
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.text.TextComponentString
 import nz.daved.Improve
 
 case class CommandImprove() extends ICommand {
@@ -16,8 +17,10 @@ case class CommandImprove() extends ICommand {
 
   override def getCommandUsage(sender: ICommandSender): String = "Currently on \"improve\" is supported"
 
-  override def execute(server: MinecraftServer, sender: ICommandSender, args: Array[String]) =
+  override def execute(server: MinecraftServer, sender: ICommandSender, args: Array[String]) = {
+    sender.addChatMessage(new TextComponentString("Executed Command"))
     Improve.logger.info("Executed Command")
+  }
 
   override def getTabCompletionOptions(
       server: MinecraftServer,
