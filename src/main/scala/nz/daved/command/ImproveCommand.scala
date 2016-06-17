@@ -1,7 +1,5 @@
 package nz.daved.command
 
-import java.util
-
 import net.minecraft.command.{ICommand, ICommandSender}
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.server.MinecraftServer
@@ -40,15 +38,24 @@ abstract class ImproveCommand(val name: String) extends ICommand {
     sender: ICommandSender,
     args: Array[String],
     pos: BlockPos) = {
-    sender.addChatMessage(new TextComponentString(args.mkString(", ")))
     lazy val rootCommand = subCommands.find(_.name == args.head)
-    if (args.length <= 1 || rootCommand.isEmpty || args(1).nonEmpty) {
-      subCommands.map(_.name)
+    if (args.length <= 1 || rootCommand.isEmpty) {
+      if (args.last.nonEmpty) {
+        subCommandNames
+      } else {
+        subCommandNames ++ childDynamicCommandTypes
+      }
     } else {
-      rootCommand.get.getTabCompletionOptions(server, sender, args, pos)
+      rootCommand.get.getTabCompletionOptions(server, sender, args.tail, pos)
     }
   }
 
+  lazy val subCommandNames: List[String] =
+    subCommands
+      .filterNot(c => c.isInstanceOf[DynamicCommand])
+      .map(_.name)
+
+  lazy val childDynamicCommandTypes = subCommands collect {case c:DynamicCommand => s"[${c.commandType}]"} distinct
 }
 
 trait IntermediateCommand extends ImproveCommand {
@@ -72,4 +79,9 @@ trait PlayerCommand extends ImproveCommand {
 
 abstract class TerminalCommand(override val name:String) extends ImproveCommand(name) {
   override val subCommands: List[ImproveCommand] = Nil
+}
+
+
+trait DynamicCommand extends IntermediateCommand {
+  val commandType: String
 }
