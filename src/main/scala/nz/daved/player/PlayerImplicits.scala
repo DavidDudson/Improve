@@ -5,7 +5,7 @@ import net.minecraft.stats.StatBase
 
 object PlayerImplicits {
 
-  case class EntityPlayerMPImplicits(player: EntityPlayerMP) {
+  implicit class EntityPlayerMPImplicits(player: EntityPlayerMP) {
     def getStat(stat: StatBase) = player.getStatFile.readStat(stat)
   }
 }
