@@ -5,11 +5,19 @@ import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.server.MinecraftServer
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.text.TextComponentString
+import nz.daved.util.StringUtils._
 
 import scala.collection.JavaConversions._
 
 abstract class ImproveCommand(val name: String) extends ICommand {
-  val aliases: List[String] = Nil
+  val aliases: List[String] =
+    List(name.sentenceToCamelCase ,
+      name.sentenceToLowerCamelCase,
+      name.sentenceToUpperCamelCase,
+      name.sentenceToSnakeCase,
+      name.sentenceToLowerSnakeCase,
+      name.sentenceToScreamingSnakeCase)
+
   val subCommands: List[ImproveCommand]
   val parent: Option[ImproveCommand]
 
@@ -45,9 +53,9 @@ abstract class ImproveCommand(val name: String) extends ICommand {
     sender: ICommandSender,
     args: Array[String],
     pos: BlockPos): java.util.List[String] = {
-    lazy val rootCommand = subCommands.find(_.name == args.head)
+    lazy val rootCommand = subCommands.find(_.name.equalsIgnoreCase(args.head))
     if (args.length == 1 || rootCommand.isEmpty) {
-      val potentialCommands = subCommands.filter(_.name.startsWith(args.last))
+      val potentialCommands = subCommands.filter(_.name.toLowerCase.startsWith(args.last.toLowerCase))
       if (args.last.nonEmpty && potentialCommands.nonEmpty) {
         potentialCommands.map(_.name)
       } else if ((subCommandNames ++ childDynamicCommandTypes).contains(args.head)) {
@@ -63,7 +71,7 @@ abstract class ImproveCommand(val name: String) extends ICommand {
 
 trait IntermediateCommand extends ImproveCommand {
   def execute(server: MinecraftServer, sender: ICommandSender, args: Array[String]) = {
-    lazy val nextCommand = subCommands.find(c => c.name == args.head)
+    lazy val nextCommand = subCommands.find(c => c.name.equalsIgnoreCase(args.head))
     if (args.isEmpty || !super.checkPermission(server, sender) || nextCommand.isEmpty) {
       sender.addChatMessage(new TextComponentString(usageString))
     } else {

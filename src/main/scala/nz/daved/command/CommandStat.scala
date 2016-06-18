@@ -5,6 +5,7 @@ import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.server.MinecraftServer
 import net.minecraft.stats.{StatBase, StatList}
 import nz.daved.stat.StatPrinter
+import nz.daved.util.StringUtils._
 
 import scala.collection.JavaConversions._
 
@@ -24,7 +25,7 @@ case class CommandStatShow(parent: Option[ImproveCommand]) extends ImproveComman
 
 case class CommandStatSpecific(
     parent: Option[ImproveCommand], stat: StatBase)
-  extends TerminalCommand(stat.getStatName.getUnformattedText.replaceAll("\\s", ""))
+  extends TerminalCommand(stat.getStatName.getUnformattedText.sentenceToLowerCamelCase)
   with DynamicCommand {
   override def execute(server: MinecraftServer, sender: ICommandSender, args: Array[String]) =
     StatPrinter.printStat(sender.asInstanceOf[EntityPlayerMP], stat)
