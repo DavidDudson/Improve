@@ -22,9 +22,14 @@ case class CommandStatShow(parent: Option[ImproveCommand]) extends ImproveComman
 }
 
 
-case class CommandStatSpecific(parent: Option[ImproveCommand], stat: StatBase) extends TerminalCommand(stat.getStatName.getUnformattedText.replaceAll("\\s", "")) {
+case class CommandStatSpecific(
+    parent: Option[ImproveCommand], stat: StatBase)
+  extends TerminalCommand(stat.getStatName.getUnformattedText.replaceAll("\\s", ""))
+  with DynamicCommand {
   override def execute(server: MinecraftServer, sender: ICommandSender, args: Array[String]) =
     StatPrinter.printStat(sender.asInstanceOf[EntityPlayerMP], stat)
+
+  override val commandType: String = "Stat Name"
 }
 
 case class CommandStatAll(parent: Option[ImproveCommand]) extends TerminalCommand("all") {

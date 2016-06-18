@@ -15,7 +15,14 @@ abstract class ImproveCommand(val name: String) extends ICommand {
 
   lazy val parentList: String = parent.map(_.parentList).getOrElse("") + s"$name "
 
-  lazy val usageString = s"Usage: $parentList[${subCommands.map(_.name).mkString("|")}]"
+  lazy val subCommandNames: List[String] =
+    subCommands
+      .filterNot(c => c.isInstanceOf[DynamicCommand])
+      .map(_.name)
+
+  lazy val childDynamicCommandTypes = subCommands collect {case c:DynamicCommand => s"[${c.commandType}]"} distinct
+
+  lazy val usageString = s"Usage: $parentList[${(subCommandNames ++ childDynamicCommandTypes).mkString("|")}]"
 
   def execute(server: MinecraftServer, sender: ICommandSender, args: Array[String]): Unit
 
@@ -40,22 +47,11 @@ abstract class ImproveCommand(val name: String) extends ICommand {
     pos: BlockPos) = {
     lazy val rootCommand = subCommands.find(_.name == args.head)
     if (args.length <= 1 || rootCommand.isEmpty) {
-      if (args.last.nonEmpty) {
-        subCommandNames
-      } else {
-        subCommandNames ++ childDynamicCommandTypes
-      }
+      subCommandNames ++ childDynamicCommandTypes
     } else {
       rootCommand.get.getTabCompletionOptions(server, sender, args.tail, pos)
     }
   }
-
-  lazy val subCommandNames: List[String] =
-    subCommands
-      .filterNot(c => c.isInstanceOf[DynamicCommand])
-      .map(_.name)
-
-  lazy val childDynamicCommandTypes = subCommands collect {case c:DynamicCommand => s"[${c.commandType}]"} distinct
 }
 
 trait IntermediateCommand extends ImproveCommand {
