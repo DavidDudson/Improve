@@ -44,10 +44,15 @@ abstract class ImproveCommand(val name: String) extends ICommand {
     server: MinecraftServer,
     sender: ICommandSender,
     args: Array[String],
-    pos: BlockPos) = {
+    pos: BlockPos): java.util.List[String] = {
     lazy val rootCommand = subCommands.find(_.name == args.head)
     if (args.length <= 1 || rootCommand.isEmpty) {
-      subCommandNames ++ childDynamicCommandTypes
+      val potentialCommands = subCommands.filter(_.name.startsWith(args.last))
+      if (potentialCommands.nonEmpty && args.last.nonEmpty) {
+        potentialCommands.map(_.name)
+      } else {
+        subCommandNames ++ childDynamicCommandTypes
+      }
     } else {
       rootCommand.get.getTabCompletionOptions(server, sender, args.tail, pos)
     }
