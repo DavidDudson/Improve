@@ -29,7 +29,7 @@ case class CommandStatSpecific(
   override def execute(server: MinecraftServer, sender: ICommandSender, args: Array[String]) =
     StatPrinter.printStat(sender.asInstanceOf[EntityPlayerMP], stat)
 
-  override val commandType: String = "Stat Name"
+  override val commandType: String = "StatName"
 }
 
 case class CommandStatAll(parent: Option[ImproveCommand]) extends TerminalCommand("all") {

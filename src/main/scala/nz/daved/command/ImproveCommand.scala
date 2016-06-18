@@ -46,10 +46,12 @@ abstract class ImproveCommand(val name: String) extends ICommand {
     args: Array[String],
     pos: BlockPos): java.util.List[String] = {
     lazy val rootCommand = subCommands.find(_.name == args.head)
-    if (args.length <= 1 || rootCommand.isEmpty) {
+    if (args.length == 1 || rootCommand.isEmpty) {
       val potentialCommands = subCommands.filter(_.name.startsWith(args.last))
-      if (potentialCommands.nonEmpty && args.last.nonEmpty) {
+      if (args.last.nonEmpty && potentialCommands.nonEmpty) {
         potentialCommands.map(_.name)
+      } else if ((subCommandNames ++ childDynamicCommandTypes).contains(args.head)) {
+        Nil
       } else {
         subCommandNames ++ childDynamicCommandTypes
       }
